@@ -20,6 +20,8 @@ public class StudentServlet extends HttpServlet {
     ClassService classService = new ClassServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String action = request.getParameter("act");
         if (action == null) {
             action = "";
@@ -75,7 +77,7 @@ public class StudentServlet extends HttpServlet {
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Class> classes = classService.findAll();
         request.setAttribute("classes", classes);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("student/create.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("student/creat.jsp");
         requestDispatcher.forward(request, response);
     }
 
@@ -88,6 +90,8 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String action = request.getParameter("act");
         if (action == null) {
             action = "";
@@ -123,7 +127,7 @@ public class StudentServlet extends HttpServlet {
         String name = request.getParameter("name");
         int age = Integer.parseInt(request.getParameter("age"));
         int id = Integer.parseInt(request.getParameter("id"));
-        int cID = Integer.parseInt(request.getParameter("cID"));
+        int cID = Integer.parseInt(request.getParameter("classId"));
         Class clazz = classService.findById(cID);
         studentService.update(new Student(id,name,age,clazz));
         response.sendRedirect("/home");

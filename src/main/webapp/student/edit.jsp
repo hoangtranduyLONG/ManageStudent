@@ -61,7 +61,7 @@
             <table class="table table-dark mt-3">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col" >Name</th>
                     <th scope="col">Age</th>
                     <th scope="col">Class</th>
                 </tr>
@@ -80,7 +80,7 @@
                             <input type="number" name="age" value="${student.age}">
                             <%--                    <input --%>
                             <%--                            type="text" name="clazz" value="${student.clazz.name}">--%>
-                            <select class="form-control" name="cID">
+                            <select class="form-control" name="classId">
                                 <c:forEach items='${classes}' var="cl">
                                     <option value="${cl.id}">${cl.name}</option>
                                 </c:forEach>

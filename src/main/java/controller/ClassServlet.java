@@ -14,6 +14,8 @@ public class ClassServlet<ClassService> extends HttpServlet {
     ClassServiceImpl classService = new ClassServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String action = request.getParameter("act");
         if (action == null) {
             action = "";
@@ -36,6 +38,7 @@ public class ClassServlet<ClassService> extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
     }
 }

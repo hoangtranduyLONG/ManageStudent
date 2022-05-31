@@ -17,49 +17,11 @@ import java.util.List;
 @WebServlet(name = "HomeServlet", urlPatterns = "/home")
 public class HomeServlet extends HttpServlet {
     ClassService classService = new ClassServiceImpl();
-    StudentService studentService = new StudentService() {
-        @Override
-        public List<Student> findAll() {
-            return null;
-        }
-
-        @Override
-        public void add(Student student) throws SQLException {
-
-        }
-
-        @Override
-        public Student findById(int id) {
-            return null;
-        }
-
-        @Override
-        public boolean delete(int id) throws SQLException {
-            return false;
-        }
-
-        @Override
-        public boolean update(Student student) throws SQLException {
-            return false;
-        }
-
-        @Override
-        public List<Student> findByName(String name) {
-            return null;
-        }
-
-        @Override
-        public List<Student> findAllOderByAge() {
-            return null;
-        }
-
-        @Override
-        public List<Student> findAllByClass(int cID) {
-            return null;
-        }
-    };
+    StudentService studentService = new StudentServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String cID = request.getParameter("cID");
         String key = request.getParameter("key");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
@@ -70,7 +32,7 @@ public class HomeServlet extends HttpServlet {
             students = studentService.findAllByClass(Integer.parseInt(cID));
         }
         if (key != null) {
-            students = studentService.findByName(key);
+            students = studentService.findAllByNameContains(key);
         }
         request.setAttribute("students", students);
         requestDispatcher.forward(request, response);
@@ -78,6 +40,7 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
     }
 }

@@ -11,7 +11,7 @@ public class ClassServiceImpl implements ClassService {
         Connection connection = null;
         try {
             java.lang.Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datastudent?useSSL=false", "root", "123456");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?useSSL=false", "root", "123456");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

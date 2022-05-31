@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StudentService extends GeneralService <Student> {
     List <Student> findAllByClass (int cID);
+    List<Student> findAllByNameContains(String name);
 }

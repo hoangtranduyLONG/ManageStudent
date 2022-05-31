@@ -14,7 +14,7 @@ public class StudentServiceImpl implements StudentService{
         Connection connection = null;
         try {
             java.lang.Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datastudent?useSSL=false", "root", "123456");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?useSSL=false", "root", "123456");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService{
                 int id = rs.getInt("id");
                 int age = rs.getInt("age");
                 String name = rs.getString("name");
-                int classId = rs.getInt("cID");
+                int classId = rs.getInt("classID");
                 Class clazz = classService.findById(classId);
                 students.add(new Student(id,name,age,clazz));
 
@@ -55,15 +55,15 @@ public class StudentServiceImpl implements StudentService{
     public void add(Student student) throws SQLException {
         try (Connection connection = getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement("insert into student (name,age,cID) value (?,?,?)");) {
+             PreparedStatement preparedStatement = connection.prepareStatement("insert into student (name,age,classId) values (?,?,?)");) {
             preparedStatement.setString(1, student.getName());
             preparedStatement.setInt(2, student.getAge());
             preparedStatement.setInt(3, student.getClazz().getId());
             preparedStatement.executeUpdate();
-
             System.out.println(preparedStatement);
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
 
@@ -105,10 +105,11 @@ public class StudentServiceImpl implements StudentService{
     public boolean update(Student student) throws SQLException {
         boolean upDate;
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = getConnection().prepareStatement("update student set name = ? , age = ?  where id = ?");) {
+             PreparedStatement preparedStatement = getConnection().prepareStatement("update student set name = ? ,age = ?, classId=? where id = ?");) {
             preparedStatement.setString(1, student.getName());
             preparedStatement.setInt(2, student.getAge());
-            preparedStatement.setInt(3, student.getId());
+            preparedStatement.setInt(3, student.getClazz().getId());
+            preparedStatement.setInt(4, student.getId());
             upDate= preparedStatement.executeUpdate()>0;
         }
         return upDate;
@@ -150,7 +151,7 @@ public class StudentServiceImpl implements StudentService{
 
         try (Connection connection = getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement("select * from student where cID = ?");) {
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from student where classId = ?");) {
             preparedStatement.setInt(1, cID);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
@@ -158,7 +159,7 @@ public class StudentServiceImpl implements StudentService{
                 int id = rs.getInt("id");
                 int age = rs.getInt("age");
                 String name = rs.getString("name");
-                int classId = rs.getInt("cID");
+                int classId = rs.getInt("classId");
                 Class clazz = classService.findById(classId);
                 students.add(new Student(id,name,age,clazz));
 
@@ -166,6 +167,27 @@ public class StudentServiceImpl implements StudentService{
         } catch (SQLException e) {
         }
 
+        return students;
+    }
+
+    @Override
+    public List<Student> findAllByNameContains(String name) {
+        List<Student> students = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from student where name like ?");) {
+            preparedStatement.setString(1, "%" + name + "%");
+            System.out.println(preparedStatement); //in ra câu truy vấn.
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int age = rs.getInt("age");
+                name = rs.getString("name");
+                int clazzId = rs.getInt("classId"); // lấy ra classId từ bảng student trong db
+                Class clazz = classService.findById(clazzId); // từ classId vừa lấy được, dùng ClassService để tìm đối tượng class tương ứng
+                students.add(new Student(id, name, age, clazz)); //thêm đối tượng là danh sách
+            }
+        } catch (SQLException e) {
+        }
         return students;
     }
 }
