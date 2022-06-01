@@ -81,7 +81,7 @@ public class StudentServiceImpl implements StudentService{
             while (rs.next()) {
                 int age = rs.getInt("age");
                 String name = rs.getString("name");
-                int classId = rs.getInt("cID");
+                int classId = rs.getInt("classID");
                 Class clazz = classService.findById(classId);
                 student = new Student(id, name,age,clazz);
             }

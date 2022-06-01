@@ -82,13 +82,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items='${students}' var="st">
                     <tr>
-                        <th>${st.name}</th>
-                        <td>${st.age}</td>
-                        <td>${st.clazz.name}</td>
+                        <th>${student.name}</th>
+                        <td>${student.age}</td>
+                        <td>${student.clazz.name}</td>
                     </tr>
-                </c:forEach>
                 </tbody>
             </table>
         </div>

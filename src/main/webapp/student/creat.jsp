@@ -70,7 +70,7 @@
                         <option value="${cl.id}">${cl.name}</option>
                     </c:forEach>
                 </select>
-                <button class="btn btn-primary mt-2">Thêm</button>
+                <button class="btn btn-primary mt-2">Add</button>
             </form>
         </div>
     </div>

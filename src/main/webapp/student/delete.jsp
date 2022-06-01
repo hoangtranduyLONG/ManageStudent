@@ -75,7 +75,7 @@
                     <td>${delete.clazz.name}</td>
                     <td>
                         <form method="post">
-                            <button class="btn btn-danger">Xóa</button>
+                            <button class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
